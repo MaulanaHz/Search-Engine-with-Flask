@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Search Engine</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container bootstrap snippets bootdey">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <h2>
+                            <center>Simple Search Engine<span class="text-navy"></span></center>
+                        </h2>
+            
+                        <div class="search-form">
+                            <form action="#" method="get">
+                                <div class="input-group">
+                                    <input class="form-control input-lg query" type="text" placeholder="Cari query yang kamu inginkan?" name="search" >
+                                    <input class="form-control input-lg banyak" type="number" value='5'>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-lg btn-primary cari">
+                                            Search
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+    
+                        <div id="root" class="hr-line-dashed"></div>
+                        
+                        <div class="hr-line-dashed"></div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</body>
+<script>
+    const query= document.querySelector('.query')
+    const banyak= document.querySelector('.banyak')
+    const cari= document.querySelector('.cari')
+    const root= document.querySelector('#root')
+
+    let makeCard = el =>{
+        return `
+            <div class="search-result">
+                <h4><a href='${el.url}'>${el.title}</a></h4>
+                <a href='${el.url}'>${el.url}</a>
+                <p>${el.description}</p>
+            </div>
+        `
+    }
+    cari.addEventListener('click', res=> {
+        fetch(`http://127.0.0.1:5000/api/${query.value}/${banyak.value}`)
+        .then(response=>response.json())
+        .then(data=>{
+            root.innerHTML=''
+            data.forEach(el => {root.innerHTML+=makeCard(el)})
+        })
+    })
+</script>
+</html>
