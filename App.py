@@ -14,4 +14,5 @@ def home():
 def api_search(query, banyak):
     return search(query, int(banyak))
 
+#run flask app
 app.run()
